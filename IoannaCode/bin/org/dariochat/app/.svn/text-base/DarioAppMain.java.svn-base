@@ -1,0 +1,96 @@
+package org.dariochat.app;
+
+import java.awt.event.*;
+import java.util.Calendar;
+import javax.swing.*;
+
+public class DarioAppMain
+{
+	static Mail mail;
+	static Chat chat;
+	static Browser browser;
+	static Composer composer;
+	static ChatQueue chatQueue = new ChatQueue ();
+	static Data data = new Data ();
+	static long startTime = 0;
+	static double lastTime = 0;
+	static boolean newTrial = true;
+
+	static void startEvent (int delay, boolean periodic, ActionListener al)
+	{
+		javax.swing.Timer timer = new javax.swing.Timer (delay, al);
+		timer.setRepeats (periodic);
+		timer.start();
+	}
+
+	static void recordEvent (String window, String event)
+	{ 
+		recordEvent (window, event, "");
+	}
+
+	static void recordEvent (String window, String event, String extra)
+	{
+		long ms = Calendar.getInstance().getTimeInMillis() - startTime;
+		Sample s = new Sample (.001*ms, window, event, extra);
+		data.add (s);
+
+		if (newTrial && chat!=null && chat.isLastFromUser() && chatQueue.isNext (window, event))
+		{
+			final String text = chatQueue.getMessage();
+			int delay = 50 + Utilities.random.nextInt(150);
+			startEvent (delay, false, new ActionListener() {
+				public void actionPerformed (ActionEvent e) {
+					chat.addMessage (false, text);
+					recordEvent ("chat", "prompt", text);
+				}
+			});
+			newTrial = false;
+		}
+
+		if (window.equals("mail") && event.equals("select"))
+			newTrial = true;
+	}
+
+	public static void exit ()
+	{
+		System.exit (0);
+	}
+
+	public static void main (String args[])
+	{
+		startTime = Calendar.getInstance().getTimeInMillis();
+
+		Images.initialize();
+
+		browser = new Browser ();
+		browser.setVisible (true);
+
+		chat = new Chat ();
+		chat.setVisible (true);
+
+		mail = new Mail ();
+		mail.setVisible (true);
+
+		composer = new Composer ();
+		composer.setVisible (false);
+		
+		// should also disable CMD-` in Preferences so people don't switch windows using keystrokes!
+
+		startEvent (100, true, new ActionListener() {
+			public void actionPerformed (ActionEvent e) {
+				mail.setSize (700, 700);
+				mail.setLocation (0, 0);
+				mail.setExtendedState (JFrame.NORMAL);
+				browser.setSize (700, 350); // (700,456);
+				browser.setLocation (50, 100);
+				browser.setExtendedState (JFrame.NORMAL);
+				chat.setSize (700,220); // (700,590);
+				chat.setLocation (100,240); // (100,132);
+				chat.setExtendedState (JFrame.NORMAL);
+				composer.setSize (650, 500);
+				composer.setLocation (70, 50);
+				composer.setExtendedState (JFrame.NORMAL);
+			}    
+		});
+	}
+}

@@ -1,0 +1,273 @@
+package org.dariochat.app;
+
+import java.awt.*;
+import java.awt.dnd.*;
+import java.awt.event.*;
+import java.util.*;
+import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableColumn;
+import javax.swing.text.html.*;
+import javax.swing.tree.*;
+
+public class Mail extends JFrame
+{
+	MyTableModel tableModel;
+	JTable table;
+	DefaultTreeModel treeModel;
+	JTree tree;
+	JEditorPane message;
+	ImageIcon respondedIcon, forwardedIcon;
+
+	DefaultMutableTreeNode mailbox (String name)
+	{
+		DefaultMutableTreeNode node = new DefaultMutableTreeNode (name);
+		node.add (new DefaultMutableTreeNode ("Messages"));
+		return node;
+	}
+
+	JButton controlButton (String label, int imageIndex)
+	{
+		JButton b = new JButton (label, new ImageIcon (Images.getImage (imageIndex)));
+		b.setVerticalTextPosition (SwingConstants.BOTTOM);
+		b.setHorizontalTextPosition (SwingConstants.CENTER);
+		b.setBackground (Color.lightGray);
+		b.setPreferredSize (new Dimension (70, 60));
+		return b;
+	}
+
+	Mail ()
+	{
+		super ("Mail");
+
+		JPanel main = new JPanel (new BorderLayout ());
+
+		DefaultMutableTreeNode root = new DefaultMutableTreeNode ("MAILBOXES");
+		root.add (mailbox ("Inbox"));
+		root.add (mailbox ("Replied"));
+		//root.add (mailbox ("Forwarded"));
+		//root.add (mailbox ("Archived"));
+		treeModel = new DefaultTreeModel (root);
+		tree = new JTree (treeModel);
+		tree.setRootVisible (false);
+		tree.setShowsRootHandles (false);
+		tree.setSelectionRow (0);
+		tree.setBorder (BorderFactory.createEmptyBorder (6,12,6,12));
+		tree.setBackground (Utilities.mailBlue);
+
+		DefaultTreeCellRenderer renderer = new DefaultTreeCellRenderer() {
+			public Color getBackground() { return null; }
+			public Color getBackgroundNonSelectionColor() { return null; }
+		};
+		tree.setCellRenderer(renderer);
+
+		DropTargetListener dtl = new DropTargetListener () {
+
+			public void dragEnter (DropTargetDragEvent dtde) {}
+			public void dragExit (DropTargetEvent dtde) {}
+			public void dropActionChanged(DropTargetDragEvent dtde) {}
+
+			public void dragOver (DropTargetDragEvent dtde)
+			{
+				Point pt = dtde.getLocation();
+				TreePath path = tree.getPathForLocation (pt.x, pt.y);
+				if ((path != null) && (path.getPathCount() > 1))
+				{
+					tree.setSelectionPath (path);
+					dtde.acceptDrag (DnDConstants.ACTION_MOVE);
+					//DarioAppMain.recordEvent ("mail", "drag");
+				}
+				else
+				{
+					tree.clearSelection();
+					dtde.rejectDrag();
+					//DarioAppMain.recordEvent ("mail", "rejectdrag");
+				}
+			}
+
+			public void drop (DropTargetDropEvent dtde)
+			{
+				Point pt = dtde.getLocation();
+				TreePath path = tree.getPathForLocation (pt.x, pt.y);
+				if ((path != null) && (path.getPathCount() > 1))
+				{
+					dtde.acceptDrop (DnDConstants.ACTION_MOVE);
+					int i = table.getSelectedRow();
+					if (i >= 0)
+					{
+						removeEmail (i);
+						addRandomEmail();
+						table.clearSelection();
+						table.repaint();
+						tree.clearSelection();
+					}
+					DarioAppMain.recordEvent ("mail", "move", path.getLastPathComponent().toString());
+				}
+				else
+				{
+					dtde.rejectDrop();
+					//DarioAppMain.recordEvent ("mail", "rejectdrop");
+				}
+			}
+
+		};
+		new DropTarget (tree, dtl);
+
+		main.add (tree, BorderLayout.WEST);
+
+		tableModel = new MyTableModel ();
+		table = new JTable (tableModel);
+		table.setSelectionMode (ListSelectionModel.SINGLE_SELECTION);
+		table.setDragEnabled (true);
+		table.setRowSelectionAllowed (true);
+		table.setColumnSelectionAllowed (false);
+		setTableColumnWidth (0, 20);
+		//setTableColumnWidth (1, 150);
+		//setTableColumnWidth (2, 150);
+		setTableColumnWidth (3, 130);
+
+		respondedIcon = new ImageIcon (Images.getImage (5));
+		forwardedIcon = new ImageIcon (Images.getImage (6));
+
+		table.getColumnModel().getColumn(0).setCellRenderer (new DefaultTableCellRenderer() {
+			public Component getTableCellRendererComponent(JTable table, Object value,
+					boolean isSelected, boolean hasFocus, 
+					int row, int column) {
+				setIcon ((ImageIcon) value);
+				return this;
+			}
+		});
+
+		for (int i=0 ; i<20 ; i++) addRandomEmail();
+
+		JScrollPane tableScroll = new JScrollPane (table);
+		tableScroll.setVerticalScrollBarPolicy (JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
+		message = new JEditorPane ();
+		message.setEditable (false);
+		message.setContentType ("text/html");
+		message.setBorder (BorderFactory.createEmptyBorder (6,12,6,12));
+		Font font = UIManager.getFont("Label.font");
+		String bodyRule = "body {font-family: " + font.getFamily() + "; " + "font-size: " + font.getSize() + "pt;}";
+		((HTMLDocument) (message.getDocument())).getStyleSheet().addRule(bodyRule);
+
+		JScrollPane editorScroll = new JScrollPane (message);
+		editorScroll.setVerticalScrollBarPolicy (JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
+		ListSelectionModel selmod = table.getSelectionModel();
+		selmod.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged (ListSelectionEvent e) {
+				if (!e.getValueIsAdjusting())
+				{
+					int i = table.getSelectedRow();
+					if (i>=0 && i<tableModel.emails.size())
+					{
+						Email email = tableModel.emails.elementAt(i);
+						message.setText (email.bodyHTML());
+						String product = Products.getFullString (email.productIndex);
+						DarioAppMain.recordEvent ("mail", "select", product);
+					}
+					else
+					{
+						message.setText ("");
+						//DarioAppMain.recordEvent ("mail", "unselect");
+					}
+				}
+			}
+		});
+
+		JSplitPane msgPane = new JSplitPane (JSplitPane.VERTICAL_SPLIT, tableScroll, editorScroll);
+		msgPane.setBorder (null);
+		main.add (msgPane, BorderLayout.CENTER);
+
+		JButton getmail = controlButton ("Get Mail", 3);
+		JButton compose = controlButton ("Compose", 4);
+		JButton reply = controlButton (" Reply ", 1);
+		JButton forward = controlButton ("Forward", 2);
+				
+		JPanel buttons = new JPanel();
+		buttons.setLayout (new BoxLayout (buttons, BoxLayout.X_AXIS));
+		buttons.add (getmail);
+		buttons.add (Box.createRigidArea (new Dimension (3,3)));
+		buttons.add (compose);
+		buttons.add (Box.createRigidArea (new Dimension (3,3)));
+		buttons.add (reply);
+		buttons.add (Box.createRigidArea (new Dimension (3,3)));
+		buttons.add (forward);
+		buttons.add (Box.createHorizontalGlue());
+		buttons.setBackground (Utilities.myDarkGray);
+		buttons.setBorder (BorderFactory.createEmptyBorder (3,12,3,12));
+		
+		reply.addActionListener (new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int i = table.getSelectedRow();
+				if (i>=0 && i<tableModel.emails.size())
+				{
+					Email email = tableModel.emails.elementAt(i);
+					DarioAppMain.composer.appear (email, true);
+					email.status = 1;
+					table.repaint();
+					String product = Products.getPrice (email.productIndex);
+					DarioAppMain.recordEvent ("mail", "reply", product);
+				}
+				else
+				{
+					DarioAppMain.recordEvent ("mail", e.getActionCommand());										
+				}
+			}
+		});
+
+		main.add (buttons, BorderLayout.NORTH);
+
+		setDefaultCloseOperation (JFrame.DO_NOTHING_ON_CLOSE);
+		setContentPane (main);
+		pack ();
+
+		//setSize (700, 700);
+		msgPane.setDividerLocation (.25);
+	}
+
+	void addEmail (Email email) { tableModel.emails.add (email); }
+	void addRandomEmail () { addEmail (new Email()); }
+
+	void removeEmail (int i) { tableModel.emails.removeElementAt (i); }
+
+	void setTableColumnWidth (int i, int w)
+	{
+		TableColumn col = table.getColumnModel().getColumn(i);
+		col.setMinWidth (w);
+		col.setMaxWidth (w);
+		col.setPreferredWidth (w);
+	}
+
+	class MyTableModel extends AbstractTableModel
+	{
+		String[] columns = {"¥", "From", "Subject", "Date"};
+		Vector<Email> emails = new Vector<Email> ();
+
+		public int getColumnCount() { return columns.length; }
+		public int getRowCount() { return emails.size(); }
+		public String getColumnName (int j) { return columns[j]; }
+		public boolean isCellEditable (int i, int j) { return false; }
+
+		public Object getValueAt (int i, int j)
+		{
+			Email e = emails.elementAt (i);
+			Object o = null;
+			switch (j)
+			{
+			case 0: if (e.status == 1) return respondedIcon;
+			else if (e.status == 2) return forwardedIcon;
+			break;
+			case 1: o = e.from; break;
+			case 2: o = e.subject; break;
+			case 3: o = e.shortDate; break;
+			}
+			return o;
+		}
+	}
+}
+
