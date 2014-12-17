@@ -52,8 +52,8 @@ public class Browser extends JFrame
 
 		try {
 			File f = new File(".");
-			//homepage = new URL ("file:///" +  f.getCanonicalPath() + "/src/resources/web/Products.html");
-			homepage = new URL ("file:///" +  f.getCanonicalPath() + "/src/resources/web/Categories.html");
+			homepage = new URL ("file:///" +  f.getCanonicalPath() + "/src/resources/web/Questions.html");
+			//homepage = new URL ("file:///" +  f.getCanonicalPath() + "/src/resources/web/Categories.html");
 			load = new URL ("file:///" +  f.getCanonicalPath() + "/src/resources/web/load.html");
 			empty = new URL ("file:///" +  f.getCanonicalPath() + "/src/resources/web/empty.html");
 			searching = new URL ("file:///" +  f.getCanonicalPath() + "/src/resources/web/searching.html");
@@ -85,26 +85,23 @@ public class Browser extends JFrame
 						e1.printStackTrace();
 					}
 					
-					
-					
 					//try {	
+					//Added a delay in the browser
+					//if (browser.getPage() != homepage) {
 					
-						//Added a delay in the browser
-						//if (browser.getPage() != homepage) {
-					
-						ActionListener taskPerformer = new ActionListener() {
-							public void actionPerformed(ActionEvent evt) {
-								try {
-									browser.setPage(event.getURL());
-									level ++;
-									File file = new File(event.getURL().getFile());
-									DarioAppMain.recordEvent ("browser", "link"+level, file.getName());
-								} catch (IOException e) {
-									e.printStackTrace();
-								}
-								
+					ActionListener taskPerformer = new ActionListener() {
+						public void actionPerformed(ActionEvent evt) {
+							try {
+								browser.setPage(event.getURL());
+								level ++;
+								File file = new File(event.getURL().getFile());
+								DarioAppMain.recordEvent ("browser", "link"+level, file.getName());
+							} catch (IOException e) {
+								e.printStackTrace();
 							}
-						};
+							
+						}
+					};
 						// create noise for the delay
 						double rnd = Math.random()*2-1;
 						double noise = (delay/100*noisePercentage)*rnd;
@@ -128,30 +125,6 @@ public class Browser extends JFrame
 						
 						test.setRepeats(false);
 						test.start();
-						//test.stop();
-						
-							
-						/*
-						try {
-							Thread.sleep(delay);
-						}
-							catch (InterruptedException ie) {
-							//do nothing
-			        	}
-							
-					}
-						
-						
-						browser.setPage(event.getURL());
-						level ++;
-						File file = new File(event.getURL().getFile());
-						DarioAppMain.recordEvent ("browser", "link"+level, file.getName());
-						
-						*/
-							
-						
-						
-					//} catch (IOException e) { e.printStackTrace(); }
 				}
 			}
 		});

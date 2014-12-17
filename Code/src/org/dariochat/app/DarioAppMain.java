@@ -119,11 +119,11 @@ public class DarioAppMain
 		
 		startEvent (100, true, new ActionListener() {
 			public void actionPerformed (ActionEvent e) {
-				mail.setSize (960, 1080);
+				mail.setSize (1920, 540);
 				mail.setLocation (0, 0);
 				mail.setExtendedState (JFrame.NORMAL);
-				browser.setSize (960, 1080); // (700,456);
-				browser.setLocation (960, 0);
+				browser.setSize (1920, 540); // (700,456);
+				browser.setLocation (0, 540);
 				browser.setExtendedState (JFrame.NORMAL);
 	/*
 				chat.setSize (700,220); // (700,590);

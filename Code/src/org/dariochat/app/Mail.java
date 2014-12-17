@@ -3,9 +3,6 @@ package org.dariochat.app;
 import java.awt.*;
 import java.awt.dnd.*;
 import java.awt.event.*;
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
 import java.util.*;
 import javax.swing.*;
 import javax.swing.Timer;
@@ -59,10 +56,9 @@ public class Mail extends JFrame
 
 		DefaultMutableTreeNode root = new DefaultMutableTreeNode ("MAILBOXES");
 		root.add (mailbox ("Inbox"));
-		root.add (mailbox ("Archive"));
-		//root.add (mailbox ("Forwarded"));
-		//root.add (mailbox ("Archived"));
+		
 		treeModel = new DefaultTreeModel (root);
+		
 		tree = new JTree (treeModel);
 		tree.setRootVisible (false);
 		tree.setShowsRootHandles (false);
@@ -111,7 +107,7 @@ public class Mail extends JFrame
 					if (i >= 0)
 					{
 						removeEmail (i);
-						addRandomEmail();
+						tableModel.emails.add(new Email());
 						table.clearSelection();
 						table.repaint();
 						tree.clearSelection();
@@ -137,8 +133,6 @@ public class Mail extends JFrame
 		table.setRowSelectionAllowed (true);
 		table.setColumnSelectionAllowed (false);
 		setTableColumnWidth (0, 20);
-		//setTableColumnWidth (1, 150);
-		//setTableColumnWidth (2, 150);
 		setTableColumnWidth (3, 130);
 
 		respondedIcon = new ImageIcon (Images.getImage (5));
@@ -153,7 +147,8 @@ public class Mail extends JFrame
 			}
 		});
 
-		for (int i=0 ; i<20 ; i++) addRandomEmail();
+		// Add the (20) mails to the Email window
+		for (int i=0 ; i<20 ; i++) tableModel.emails.add(new Email());
 
 		JScrollPane tableScroll = new JScrollPane (table);
 		tableScroll.setVerticalScrollBarPolicy (JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -274,16 +269,6 @@ public class Mail extends JFrame
 		//setSize (700, 700);
 		msgPane.setDividerLocation (.25);
 	
-		
-
-		
-		
-		
-
-		
-		
-		
-		
 		//added a recordEvent to record the focus on the main mail window
 		addWindowFocusListener (new WindowFocusListener() {
 			public void windowGainedFocus(WindowEvent e) {
@@ -327,13 +312,9 @@ public class Mail extends JFrame
 				
 			}
 		});
-	
-	
 	}
 
-	void addEmail (Email email) { tableModel.emails.add (email); }
-	void addRandomEmail () { addEmail (new Email()); }
-
+	void addEmail () { tableModel.emails.add(new Email()); }
 	void removeEmail (int i) { tableModel.emails.removeElementAt (i); }
 
 	void setTableColumnWidth (int i, int w)
@@ -346,7 +327,7 @@ public class Mail extends JFrame
 
 	class MyTableModel extends AbstractTableModel
 	{
-		String[] columns = {"¥", "From:", "Subject:", "Date:"};
+		String[] columns = {"ï¿½", "From:", "Subject:", "Date:"};
 		Vector<Email> emails = new Vector<Email> ();
 
 		public int getColumnCount() { return columns.length; }

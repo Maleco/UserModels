@@ -3,7 +3,9 @@ package org.dariochat.app;
 import java.text.*;
 import java.util.*;
 
+import javax.swing.ImageIcon;
 
+// Create a *random* email for the task
 public class Email
 {
 	String from, subject, date, shortDate;
@@ -11,9 +13,8 @@ public class Email
 	String body;
 	int status;
 
-	static String firstNames[] = {"Joe", "Robert", "Bill", "James", "Tom", "Rich", "Keith", "Joshua", "Toby",
-		"Jane", "Rachel", "Beth", "Natalie", "Tammy", "Jennifer", "Amy", "Katie"};
-	static String lastNames[] = {"Turner", "Smith", "Johnson", "Walker", "Miller", "Sanders", "Brown"};
+	static String firstNames[] = {"John"};
+	static String lastNames[] = {"Doe"};
 	static String subjects[] = {"question", "request", "information"};
 	
 	Email ()
@@ -35,8 +36,11 @@ public class Email
 		productIndex = Utilities.random.nextInt(99);
 		
 		String product = Products.getBrandModel (productIndex);
+		ImageIcon screenshot = new ImageIcon("/resources/images/ScreenshotsIntro/Intro-vraag1.png");
 		body = "What is the price of " + product + "?<br><br>Tnx,<br>" + firstName;
-
+		
+		
+		
 		status = 0;
 	}
 	
