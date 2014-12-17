@@ -105,10 +105,10 @@ public class DarioAppMain
 
 		browser = new Browser (browserDelay, noisePercentage, testMode);
 		browser.setVisible (true);
-
+/*
 		chat = new Chat ();
 		chat.setVisible (true);
-
+*/
 		mail = new Mail ();
 		mail.setVisible (true);
 
@@ -119,16 +119,18 @@ public class DarioAppMain
 		
 		startEvent (100, true, new ActionListener() {
 			public void actionPerformed (ActionEvent e) {
-				mail.setSize (700, 700);
+				mail.setSize (960, 1080);
 				mail.setLocation (0, 0);
 				mail.setExtendedState (JFrame.NORMAL);
-				browser.setSize (700, 350); // (700,456);
-				browser.setLocation (50, 100);
+				browser.setSize (960, 1080); // (700,456);
+				browser.setLocation (960, 0);
 				browser.setExtendedState (JFrame.NORMAL);
+	/*
 				chat.setSize (700,220); // (700,590);
 				chat.setLocation (100,240); // (100,132);
 				chat.setExtendedState (JFrame.NORMAL);
-				composer.setSize (650, 500);
+				*/
+				composer.setSize (1000, 1000);
 				composer.setLocation (70, 50);
 				composer.setExtendedState (JFrame.NORMAL);
 			}
@@ -150,7 +152,8 @@ public class DarioAppMain
 		JFrame frame = null;
 		JOptionPane.showMessageDialog(frame, "This is the start of the experiment.\n\n When you're ready, you may press 'ok' to start.");
 		String participantNumber = (String)JOptionPane.showInputDialog(frame, "Your participant number:\n", "Participant number", JOptionPane.QUESTION_MESSAGE);
-		String participantGender = (String)JOptionPane.showInputDialog(frame, "Your gender: (m/f):\n", "Your gender", JOptionPane.QUESTION_MESSAGE);
+		Object[] possibilities = {"Male", "Female"};
+		String participantGender = (String)JOptionPane.showInputDialog(frame, "Your gender: ", "Your gender", JOptionPane.PLAIN_MESSAGE,null,possibilities, "Male");
 		String participantAge = (String)JOptionPane.showInputDialog(frame, "Your age:\n", "Your age", JOptionPane.QUESTION_MESSAGE);
 		recordEvent ("participantNumber", participantNumber,"");
 		recordEvent ("participantGender", participantGender,"");
