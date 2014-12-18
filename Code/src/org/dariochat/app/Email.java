@@ -36,7 +36,6 @@ public class Email
 		productIndex = Utilities.random.nextInt(99);
 		
 		String product = Products.getBrandModel (productIndex);
-		ImageIcon screenshot = new ImageIcon("/resources/images/ScreenshotsIntro/Intro-vraag1.png");
 		body = "What is the price of " + product + "?<br><br>Tnx,<br>" + firstName;
 		
 		

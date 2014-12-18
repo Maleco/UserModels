@@ -1,4 +1,0 @@
-1418811623.608	participantNumber	1	""
-1418811623.610	participantGender	Male	""
-1418811623.611	participantAge	1	""
-.220	browser	focus	""

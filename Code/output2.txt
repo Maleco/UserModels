@@ -1,3 +1,0 @@
-1418055976.426	participantNumber	null	""
-1418055976.429	participantGender	null	""
-1418055976.429	participantAge	null	""
