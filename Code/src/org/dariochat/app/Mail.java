@@ -107,7 +107,7 @@ public class Mail extends JFrame
 					if (i >= 0)
 					{
 						removeEmail (i);
-						tableModel.emails.add(new Email());
+						tableModel.emails.add(new Email(i));
 						table.clearSelection();
 						table.repaint();
 						tree.clearSelection();
@@ -148,7 +148,7 @@ public class Mail extends JFrame
 		});
 
 		// Add the (20) mails to the Email window
-		for (int i=0 ; i<20 ; i++) tableModel.emails.add(new Email());
+		for (int i=0 ; i<20 ; i++) tableModel.emails.add(new Email(i+1));
 
 		JScrollPane tableScroll = new JScrollPane (table);
 		tableScroll.setVerticalScrollBarPolicy (JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -178,9 +178,6 @@ public class Mail extends JFrame
 						
 							message.setText ("loading..");
 
-						
-						
-
 						ActionListener taskPerformers = new ActionListener() {
 							public void actionPerformed(ActionEvent evt) {
 								int i = table.getSelectedRow();
@@ -189,7 +186,8 @@ public class Mail extends JFrame
 									Email email = tableModel.emails.elementAt(i);
 									String product = Products.getFullString (email.productIndex);
 									message.setText (email.bodyHTML());
-									DarioAppMain.recordEvent ("mail", "loaded", product);
+									//DarioAppMain.recordEvent ("mail", "loaded", product);
+									DarioAppMain.recordEvent ("mail", "loaded", ""+email.productIndex+1);
 								}				
 							}
 						};
@@ -202,7 +200,8 @@ public class Mail extends JFrame
 						test2.start();		
 						
 						String product = Products.getFullString (email.productIndex);
-						DarioAppMain.recordEvent ("mail", "select", product);
+						//DarioAppMain.recordEvent ("mail", "select", product);
+						DarioAppMain.recordEvent ("mail", "select", ""+email.productIndex+i);
 					}else{
 						message.setText ("");
 						//DarioAppMain.recordEvent ("mail", "unselect");
@@ -273,7 +272,6 @@ public class Mail extends JFrame
 		addWindowFocusListener (new WindowFocusListener() {
 			public void windowGainedFocus(WindowEvent e) {
 				DarioAppMain.recordEvent ("mail", "focus");
-				
 
 				message.setText ("loading...");
 
@@ -285,7 +283,8 @@ public class Mail extends JFrame
 							Email email = tableModel.emails.elementAt(i);
 							String product = Products.getFullString (email.productIndex);
 							message.setText (email.bodyHTML());
-							DarioAppMain.recordEvent ("mail", "loaded", product);
+							//DarioAppMain.recordEvent ("mail", "loaded", product);
+							DarioAppMain.recordEvent ("mail", "loaded", ""+email.productIndex+1);
 
 						}				
 					}
@@ -314,7 +313,6 @@ public class Mail extends JFrame
 		});
 	}
 
-	void addEmail () { tableModel.emails.add(new Email()); }
 	void removeEmail (int i) { tableModel.emails.removeElementAt (i); }
 
 	void setTableColumnWidth (int i, int w)

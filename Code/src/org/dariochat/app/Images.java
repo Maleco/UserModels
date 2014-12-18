@@ -9,34 +9,18 @@ public class Images
 {
 	static String imageNames[] = {"figure", "reply", "forward", "mail", "compose", "responded", "forwarded", "back", "home"};
 	static int numImages = imageNames.length;
-
-	static Image images[] = null;
-	static Image screenshots[] = null;
+	static Image images[];
 
 	static void initialize ()
 	{
 		images = new Image[imageNames.length];
-		screenshots = new Image[10];
 		for (int i=0 ; i<imageNames.length ; i++)
 		{
-			String name = imageNames[i];
-			images[i] = getImageFromFile (name+".jpg");
-		}		
-		
-		// Load the Intro screenshots
-		for (int i=1; i<=5; ++i)
-					screenshots[i-1] =  getImageFromFile("ScreenshotsIntro/Intro-vraag"+i+".png;");
+			images[i] = getImageFromFile (imageNames[i]+".jpg");
+		}
 	}
 
-	static Image getImage (int i)
-	{
-		return images[i];
-	}
-	
-	static Image getIntroImage (int i)
-	{
-		return screenshots[i];
-	}
+	static Image getImage (int i) { return images[i]; }
 
 	public static Image getImageFromFile (final String name)
 	{

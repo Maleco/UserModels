@@ -13,18 +13,18 @@ public class Email
 	String body;
 	int status;
 
-	static String firstNames[] = {"John"};
-	static String lastNames[] = {"Doe"};
+	static String firstNames[] = {"Henk", "Ingrid", "Piet", "Klaas", "Jan", "Roderick"};
+	static String lastNames[] = {"Jansen", "de Vries", "Smilda", "InsertStandaardNaam"};
 	static String subjects[] = {"question", "request", "information"};
 	
-	Email ()
+	Email (int i)
 	{
 		Random r = new Random();
 
 		String firstName = firstNames[r.nextInt(firstNames.length)];
 		from = firstName + " " + lastNames[r.nextInt(lastNames.length)];
 		
-		subject = subjects[r.nextInt(subjects.length)];
+		subject = "Vraag " + i;
 		
 		Date currentDate = new Date();
 		SimpleDateFormat df = new SimpleDateFormat ("M/dd/yy h:mm aaa"); //("EEE MMM d yyyy h:mm aaa");
@@ -33,13 +33,16 @@ public class Email
 		df = new SimpleDateFormat ("h:mm aaa");
 		shortDate = "Today " + df.format (currentDate);
 
-		productIndex = Utilities.random.nextInt(99);
+		productIndex = i;
 		
 		String product = Products.getBrandModel (productIndex);
-		body = "What is the price of " + product + "?<br><br>Tnx,<br>" + firstName;
-		
-		
-		
+		body = 
+				"Goedemiddag <br><br>" + product + "<br><br>" + 
+				"Mijn wensen zijn:<br>" + product + "<br><br>" +
+				"Zou je mij de volgende prijzen kunnen toesturen van de beste optie:" + "<br><br>" + 
+				"De reissom<br>De prijs van de skipas ter plaatse<br>De verplichte bijkomende kosten" + "<br><br>" +
+				"Alvast bedankt";		
+							
 		status = 0;
 	}
 	

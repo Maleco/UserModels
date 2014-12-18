@@ -14,11 +14,17 @@ public class Products
 	
 	static String getFullString (int index)
 	{
-		return products[index][0] + " " + products[index][1] + " " + products[index][2] + " " + products[index][3];
+		//return products[index][0] + " " + products[index][1] + " " + products[index][2] + " " + products[index][3];
+		return "Question" + 1;
 	}
 	
 	static String products[][] =
 	{
+		// Intro Questions
+		
+		// Part 1 Questions
+		
+		// Part 2 Questions
 		{"photocamera", "Woksan", "B-40", "$91.99"},
 		{"photocamera", "Woksan", "C-78", "$70.99"},
 		{"photocamera", "Woksan", "H-44", "$80.99"},

@@ -53,7 +53,6 @@ public class Browser extends JFrame
 		try {
 			File f = new File(".");
 			homepage = new URL ("file:///" +  f.getCanonicalPath() + "/src/resources/web/Questions.html");
-			//homepage = new URL ("file:///" +  f.getCanonicalPath() + "/src/resources/web/Categories.html");
 			load = new URL ("file:///" +  f.getCanonicalPath() + "/src/resources/web/load.html");
 			empty = new URL ("file:///" +  f.getCanonicalPath() + "/src/resources/web/empty.html");
 			searching = new URL ("file:///" +  f.getCanonicalPath() + "/src/resources/web/searching.html");
@@ -171,32 +170,32 @@ public class Browser extends JFrame
 					}
 			}
 			public void windowLostFocus (WindowEvent e) {
-			try {
-					
+				try {
+
 					tempURL = browser.getPage(); //[Ioanna] when change back from chat, they find the link they were previous 
 					if (tempURL.equals(load)) {//[Ioanna] If it is "loading" it will get stuck there. We have to change the URL to the link requested, the one they want to go to.
 						try{//[Ioanna] if we don't put delay, they will change to chat and then back again to avoid loading
-						Thread.sleep(2000);//[Ioanna] I can't find out how much time it is loading before they swich, so I suppose they have already spent min 1000 changing windows, so we wait 2000 more.
-											// That is only in case they swich back to the browser before the "loading" is over.
+							Thread.sleep(2000);//[Ioanna] I can't find out how much time it is loading before they swich, so I suppose they have already spent min 1000 changing windows, so we wait 2000 more.
+							// That is only in case they swich back to the browser before the "loading" is over.
 						}catch (InterruptedException e1)
 						{
-						tempURL = temp2URL;}
+							tempURL = temp2URL;}
 						tempURL = temp2URL;//[Ioanna] go to the link that was requested
 					}
 					if (tempURL.equals(searching)) {//[Ioanna] If it is "loading" it will get stuck there. We have to change the URL to the link requested, the one they want to go to.
 						try{//[Ioanna] if we don't put delay, they will change to chat and then back again to avoid loading
-						Thread.sleep(2000);//[Ioanna] I can't find out how much time it is loading before they swich, so I suppose they have already spent min 1000 changing windows, so we wait 2000 more.
-											// That is only in case they swich back to the browser before the "loading" is over.
+							Thread.sleep(2000);//[Ioanna] I can't find out how much time it is loading before they swich, so I suppose they have already spent min 1000 changing windows, so we wait 2000 more.
+							// That is only in case they swich back to the browser before the "loading" is over.
 						}catch (InterruptedException e1)
 						{
-						tempURL = temp2URL;}
+							tempURL = temp2URL;}
 						tempURL = temp2URL;//[Ioanna] go to the link that was requested
 					}
 					browser.setPage(empty);//[Ioanna] that's what they see in the browser when they try to cheat by dragging the focused window
-					} catch (IOException e1) {
+				} catch (IOException e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
-					}
+					//e1.printStackTrace();
+				}
 
 			}
 		}); 
