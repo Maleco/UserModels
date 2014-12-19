@@ -16,37 +16,6 @@ public class DarioAppMain
 	static double lastTime = 0;
 	static boolean newTrial = true;
 	static boolean chatdiff = false;
-	static boolean[][] volgordes = new boolean[][] {
-			{false,false,true,false,false,true,true,true},
-			{false,true,true,true,false,false,true,false},
-			{false,false,false,true,true,false,true,true},
-			{true,false,true,true,false,false,false,true},
-			{false,false,true,true,false,true,true,false},
-			{false,true,true,false,false,false,true,true},
-			
-			{true,false,false,false,true,true,false,true},
-			{true,true,false,true,true,false,false,false},
-			{false,true,false,false,true,true,true,false},
-			{true,true,true,false,false,true,false,false},
-			{true,true,false,false,true,false,false,true},
-			{true,false,false,true,true,true,false,false},
-			
-			{false,false,true,false,true,true,false,true},
-			{false,true,true,true,true,false,false,false},
-			{false,false,false,true,true,true,true,false},
-			{true,false,true,true,false,true,false,false},
-			{false,false,true,true,true,false,false,true},
-			{false,true,true,false,true,true,false,false},
-			
-			{true,false,false,false,false,true,true,true},
-			{true,true,false,true,false,false,true,false},
-			{false,true,false,false,true,false,true,true},
-			{true,true,true,false,false,false,false,true},
-			{true,true,false,false,false,true,true,false},
-			{true,false,false,true,false,false,true,true},
-		};
-	static boolean[] dezevolgorde = new boolean[8];
-	
 
 	static void startEvent (int delay, boolean periodic, ActionListener al)
 	{
@@ -59,13 +28,6 @@ public class DarioAppMain
 	{ 
 		recordEvent (window, event, "");
 	}
-
-	public static void setNewCondition(boolean newBrowserDelay, boolean newChatSet){
-		browser.setDelay(newBrowserDelay);
-		chatQueue.setChatDiff(newChatSet);
-	}
-
-
 	
 	static void recordEvent (String window, String event, String extra)
 	{
@@ -98,7 +60,7 @@ public class DarioAppMain
 	}
 	
 	
-	public static void StartDarioAppMain(int browserDelay, int noisePercentage, boolean testMode){
+	public static void DarioAppMain(int browserDelay, int mailDelay, int noisePercentage, boolean testMode){
 		startTime = Calendar.getInstance().getTimeInMillis();
 
 		Images.initialize();
@@ -109,7 +71,7 @@ public class DarioAppMain
 		chat = new Chat ();
 		chat.setVisible (true);
 */
-		mail = new Mail ();
+		mail = new Mail (mailDelay);
 		mail.setVisible (true);
 
 		composer = new Composer ();
@@ -136,20 +98,10 @@ public class DarioAppMain
 			}
 		});
 	}
-	
-	public DarioAppMain(){
-		int noisePercentage = 35;	// percentage of noise on delay (so amount of noise depends on size of delay)
-		boolean testMode = false;	// if testMode is true, application will exit when clicking the red exit button on the browser (!) window
-	
-				StartDarioAppMain(3000, noisePercentage, testMode);
-				setNewCondition(dezevolgorde[0], dezevolgorde[1]);
-				System.out.println(Products.getSize());
-				recordEvent ("start conditie", dezevolgorde[0] + "_" +dezevolgorde[1]);
-		
-	}
-	
+
 	public static void main (String args[])
 	{
+		/* Commented out to speed up dev-time
 		JFrame frame = null;
 		JOptionPane.showMessageDialog(frame, "This is the start of the experiment.\n\n When you're ready, you may press 'ok' to start.");
 		String participantNumber = (String)JOptionPane.showInputDialog(frame, "Your participant number:\n", "Participant number", JOptionPane.QUESTION_MESSAGE);
@@ -159,14 +111,12 @@ public class DarioAppMain
 		recordEvent ("participantNumber", participantNumber,"");
 		recordEvent ("participantGender", participantGender,"");
 		recordEvent ("participantAge", participantAge,"");
-		
-		int partnr = Integer.parseInt(participantNumber.trim());
-
-		for(int i=0; i<8; i++){
-			dezevolgorde[i] = volgordes[partnr][i];
-		}
-		new DarioAppMain();
-		
+		*/		
+		int browserDelay = 3000;
+		int mailDelay = 2000;
+		int noisePercentage = 35;	// percentage of noise on delay (so amount of noise depends on size of delay)
+		boolean testMode = true;	// if testMode is true, application will exit when clicking the red exit button on the browser (!) window
+		DarioAppMain(browserDelay, mailDelay, noisePercentage, testMode);
 	}
 	
 

@@ -92,9 +92,6 @@ public class ChatQueue
 			}else{
 				JOptionPane.showMessageDialog(frame, "Take a short break and move on when you are ready");
 			condition++;
-			DarioAppMain.setNewCondition(DarioAppMain.dezevolgorde[0 + condition*2], DarioAppMain.dezevolgorde[1 + condition*2]);
-			
-			DarioAppMain.recordEvent ("start conditie", DarioAppMain.dezevolgorde[0 + condition*2] + "_" +DarioAppMain.dezevolgorde[1 + condition*2]);
 			}
 		}
 		
@@ -118,9 +115,6 @@ public class ChatQueue
 			}else{
 				JOptionPane.showMessageDialog(frame, "Take a short break and move on when you are ready");
 			condition++;
-			DarioAppMain.setNewCondition(DarioAppMain.dezevolgorde[0 + condition*2], DarioAppMain.dezevolgorde[1 + condition*2]);
-			
-			DarioAppMain.recordEvent ("start conditie", DarioAppMain.dezevolgorde[0 + condition*2] + "_" + DarioAppMain.dezevolgorde[1 + condition*2]);
 			}
 			
 		}

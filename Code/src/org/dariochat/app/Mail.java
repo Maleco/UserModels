@@ -22,7 +22,7 @@ public class Mail extends JFrame
 	JTree tree;
 	JEditorPane message;
 	ImageIcon respondedIcon, forwardedIcon;
-	int delaymail = 2000;
+	int delaymail;
 
 	
 	ActionListener taskPerformersempty = new ActionListener() {
@@ -48,9 +48,10 @@ public class Mail extends JFrame
 		return b;
 	}
 
-	Mail ()
+	Mail (final int delay)
 	{
 		super ("Mail");
+		delaymail = delay;
 
 		JPanel main = new JPanel (new BorderLayout ());
 
@@ -184,10 +185,9 @@ public class Mail extends JFrame
 								if (i>=0 && i<tableModel.emails.size())
 								{
 									Email email = tableModel.emails.elementAt(i);
-									String product = Products.getFullString (email.productIndex);
+									String product = Products.getID (email.productIndex);
 									message.setText (email.bodyHTML());
-									//DarioAppMain.recordEvent ("mail", "loaded", product);
-									DarioAppMain.recordEvent ("mail", "loaded", ""+email.productIndex+1);
+									DarioAppMain.recordEvent ("mail", "loaded", product);
 								}				
 							}
 						};
@@ -199,9 +199,8 @@ public class Mail extends JFrame
 						test2.setRepeats(false);
 						test2.start();		
 						
-						String product = Products.getFullString (email.productIndex);
-						//DarioAppMain.recordEvent ("mail", "select", product);
-						DarioAppMain.recordEvent ("mail", "select", ""+email.productIndex+i);
+						String product = Products.getID (email.productIndex);
+						DarioAppMain.recordEvent ("mail", "select", product);
 					}else{
 						message.setText ("");
 						//DarioAppMain.recordEvent ("mail", "unselect");
@@ -249,7 +248,7 @@ public class Mail extends JFrame
 					DarioAppMain.composer.appear (email, true);
 					email.status = 1;
 					table.repaint();
-					String product = Products.getPrice (email.productIndex);
+					String product = Products.getID (email.productIndex);
 					DarioAppMain.recordEvent ("mail", "reply", product);
 				}
 				else
@@ -281,11 +280,9 @@ public class Mail extends JFrame
 						if (i>=0 && i<tableModel.emails.size())
 						{
 							Email email = tableModel.emails.elementAt(i);
-							String product = Products.getFullString (email.productIndex);
+							String product = Products.getID (email.productIndex);
 							message.setText (email.bodyHTML());
-							//DarioAppMain.recordEvent ("mail", "loaded", product);
-							DarioAppMain.recordEvent ("mail", "loaded", ""+email.productIndex+1);
-
+							DarioAppMain.recordEvent ("mail", "loaded", product);
 						}				
 					}
 				};
@@ -294,19 +291,13 @@ public class Mail extends JFrame
 				double noise = (delaymail/100*35)*rnd;
 				Timer test2 = new Timer(delaymail+(int)noise, taskPerformers);
 				test2.setRepeats(false);
-				
-				int i2 = table.getSelectedRow();
-				if (i2>=0 && i2 < tableModel.emails.size())
-				{
-					Email email2 = tableModel.emails.elementAt(i2);
-
-				}
 				test2.start();
 				
 				
 			}
 			public void windowLostFocus(WindowEvent e) {
-				message.setText ("");//if the window is not focused, we don't want them to cheat by dragging the focused window an look at the model. 
+				message.setText ("");
+				//if the window is not focused, we don't want them to cheat by dragging the focused window an look at the model. 
 				//So if th mail window is not focused, the message is blank 
 				
 			}

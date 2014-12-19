@@ -20,19 +20,6 @@ public class Browser extends JFrame
 	URL searching;
 	int level = 0;
 	int delay = 0;
-	//int delay = 2000;			// delay in the browser in ms
-	//int noisePercentage = 35;	// percentage of noise on delay (so amount of noise depends on size of delay)
-	//boolean testMode = true;	// if testMode is true, application will exit when 
-								// clicking the red exit button on the browser (!) window
-
-	void setDelay(boolean newDelay){
-		if(newDelay){
-			delay = 3000;
-		}
-		else{
-			delay = 0;
-		}
-	}
 	
 	JButton controlButton (String label, int imageIndex)
 	{
