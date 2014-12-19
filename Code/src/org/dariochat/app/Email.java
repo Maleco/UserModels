@@ -27,7 +27,7 @@ public class Email
 		subject = "Vraag " + i;
 		
 		Date currentDate = new Date();
-		SimpleDateFormat df = new SimpleDateFormat ("M/dd/yy h:mm aaa"); //("EEE MMM d yyyy h:mm aaa");
+		SimpleDateFormat df = new SimpleDateFormat ("M/dd/yy h:mm aaa"); //("EEE MMM d yyyy h:mm aaa");1
 		date = df.format (currentDate);
 		
 		df = new SimpleDateFormat ("h:mm aaa");
@@ -37,10 +37,10 @@ public class Email
 		
 		String product = Products.getBrandModel (productIndex);
 		body = 
-				"Goedemiddag <br><br>" + product + "<br><br>" + 
-				"Mijn wensen zijn:<br>" + product + "<br><br>" +
-				"Zou je mij de volgende prijzen kunnen toesturen van de beste optie:" + "<br><br>" + 
-				"De reissom<br>De prijs van de skipas ter plaatse<br>De verplichte bijkomende kosten" + "<br><br>" +
+				"Goedemiddag, <br><br>" + Products.getAmount(i) + "<br><br>" + 
+				"Mijn wensen zijn:<br>- " + Products.getDemand1(i) + "<br>- " + Products.getDemand2(i) + "<br><br>" +
+				"Zou je mij de volgende prijzen kunnen toesturen van de beste optie:" + "<br>" + 
+				"- De reissom<br>- De prijs van de skipas ter plaatse<br>- De verplichte bijkomende kosten" + "<br><br>" +
 				"Alvast bedankt";		
 							
 		status = 0;
