@@ -1,6 +1,0 @@
-1418829556.674	participantNumber	1	""
-1418829556.678	participantGender	Male	""
-1418829556.678	participantAge	1	""
-.313	browser	focus	""
-.566	start conditie	false_true	""
-.581	mail	focus	""
