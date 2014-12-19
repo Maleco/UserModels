@@ -1,3 +1,0 @@
-.416	browser	focus	""
-.641	mail	focus	""
-.766	start conditie	false_true	""

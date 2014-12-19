@@ -7,16 +7,13 @@ import javax.swing.*;
 public class DarioAppMain
 {
 	static Mail mail;
-	static Chat chat;
 	static Browser browser;
 	static Composer composer;
-	static ChatQueue chatQueue = new ChatQueue ();
 	static Data data = new Data ();
 	static long startTime = 0;
 	static double lastTime = 0;
 	static boolean newTrial = true;
-	static boolean chatdiff = false;
-
+	
 	static void startEvent (int delay, boolean periodic, ActionListener al)
 	{
 		javax.swing.Timer timer = new javax.swing.Timer (delay, al);
@@ -36,15 +33,13 @@ public class DarioAppMain
 		data.add (s);
 		
 
-			if (newTrial && chat!=null && chat.isLastFromUser() && chatQueue.isNext (window, event))
+			/// Implement our model here
+			if (newTrial)
 			{
-				final String text = chatQueue.getMessage();
 				int delay = 50 + Utilities.random.nextInt(150);
-				//int delay = 5;
 				startEvent (delay, false, new ActionListener() {
 					public void actionPerformed (ActionEvent e) {
-						chat.addMessage (false, text);
-						recordEvent ("chat", "prompt", text);
+						///recordEvent ("chat", "prompt", text);
 					}
 				});
 				newTrial = false;
@@ -67,10 +62,6 @@ public class DarioAppMain
 
 		browser = new Browser (browserDelay, noisePercentage, testMode);
 		browser.setVisible (true);
-/*
-		chat = new Chat ();
-		chat.setVisible (true);
-*/
 		mail = new Mail (mailDelay);
 		mail.setVisible (true);
 
@@ -84,14 +75,11 @@ public class DarioAppMain
 				mail.setSize (820, 1080);
 				mail.setLocation (0, 0);
 				mail.setExtendedState (JFrame.NORMAL);
+	
 				browser.setSize (1100, 1080); // (700,456);
 				browser.setLocation (820, 0);
 				browser.setExtendedState (JFrame.NORMAL);
-	/*
-				chat.setSize (700,220); // (700,590);
-				chat.setLocation (100,240); // (100,132);
-				chat.setExtendedState (JFrame.NORMAL);
-				*/
+				
 				composer.setSize (1000, 1000);
 				composer.setLocation (70, 50);
 				composer.setExtendedState (JFrame.NORMAL);

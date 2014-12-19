@@ -67,7 +67,7 @@ public class Products
 				"Part1_3",
 				"Ik wil graag op 21 maart 2015, met 14 personen op wintersport.",
 				"Met een sauna",
-				"Zo dichtbij het centrum als mogelijk"
+				"Zo dichtbij piste als mogelijk"
 			},
 			{
 				"Part1_4",
@@ -77,7 +77,7 @@ public class Products
 			},
 			{
 				"Part1_5",
-				"Ik wil graag op 21 februari 2015, met . personen op wintersport.",
+				"Ik wil graag op 21 februari 2015, met 3 personen op wintersport.",
 				"Een vakantie in Oostenrijk",
 				"Een sauna inbegrepen"
 			},
@@ -132,7 +132,7 @@ public class Products
 			{
 				"Part1_14",
 				"Ik wil graag op 4 april 2015, met 4 personen op wintersport naar Les Deux Alpes",
-				"Met een balkon of terras",
+				"In het centrum",
 				"Met mogelijkheden tot een animatie en fakkelwandeling"
 			},
 			{
@@ -169,13 +169,14 @@ public class Products
 				"Part1_20",
 				"Ik wil graag op 21 februari, met 5 personen op wintersport.",
 				"Met een zwembad",
-				"Vlakbij het centrum"
+				"Met een openhaard"
 			},
 			{
 				"Part2_1:",
 				"Ik wil graag op 20 februari 2015, met 4 personen op wintersport naar Flaine. ",
-				"De laagste reissom per persoon",
-				"Niet de optie met de laagste waardering"
+				"Niet de optie met de laagste waardering",
+				"De laagste reissom per persoon"
+				
 			},
 			{
 				"Part2_2:",
@@ -210,7 +211,7 @@ public class Products
 			{
 				"Part2_7:",
 				"Ik wil graag op 20 december, met 6 personen op wintersport naar Superdévoluy.",
-				"De laagste reissom",
+				"Een reissom onder de 300 euro",
 				"Met een broodjesservice inbegrepen"
 			},
 			{

@@ -24,7 +24,7 @@ public class Mail extends JFrame
 	ImageIcon respondedIcon, forwardedIcon;
 	int delaymail;
 
-	
+
 	ActionListener taskPerformersempty = new ActionListener() {
 		public void actionPerformed(ActionEvent evt) {			
 		}
@@ -57,9 +57,9 @@ public class Mail extends JFrame
 
 		DefaultMutableTreeNode root = new DefaultMutableTreeNode ("MAILBOXES");
 		root.add (mailbox ("Inbox"));
-		
+
 		treeModel = new DefaultTreeModel (root);
-		
+
 		tree = new JTree (treeModel);
 		tree.setRootVisible (false);
 		tree.setShowsRootHandles (false);
@@ -121,7 +121,6 @@ public class Mail extends JFrame
 					//DarioAppMain.recordEvent ("mail", "rejectdrop");
 				}
 			}
-
 		};
 		new DropTarget (tree, dtl);
 
@@ -158,7 +157,7 @@ public class Mail extends JFrame
 		message.setEditable (false);
 		message.setContentType ("text/html");
 		message.setBorder (BorderFactory.createEmptyBorder (6,12,6,12));
-		
+
 		Font font = UIManager.getFont("Label.font");
 		String bodyRule = "body {font-family: " + font.getFamily() + "; " + "font-size: " + font.getSize() + "pt;}";
 		((HTMLDocument) (message.getDocument())).getStyleSheet().addRule(bodyRule);
@@ -169,76 +168,73 @@ public class Mail extends JFrame
 		ListSelectionModel selmod = table.getSelectionModel();
 		selmod.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged (ListSelectionEvent e) {
-				
+
 				if (!e.getValueIsAdjusting())
 				{
 					int i = table.getSelectedRow();
-					if (i>=0 && i<tableModel.emails.size())
-					{
-						Email email = tableModel.emails.elementAt(i);
-						
-							message.setText ("loading..");
+					Email email = tableModel.emails.elementAt(i);
 
-						ActionListener taskPerformers = new ActionListener() {
-							public void actionPerformed(ActionEvent evt) {
-								int i = table.getSelectedRow();
-								if (i>=0 && i<tableModel.emails.size())
-								{
-									Email email = tableModel.emails.elementAt(i);
-									String product = Products.getID (email.productIndex);
-									message.setText (email.bodyHTML());
-									DarioAppMain.recordEvent ("mail", "loaded", product);
-								}				
-							}
-						};
-						
-						
-						double rnd = Math.random()*2-1;
-						double noise = (delaymail/100*35)*rnd;						
-						Timer test2 = new Timer(delaymail+(int)noise, taskPerformers);
-						test2.setRepeats(false);
-						test2.start();		
-						
-						String product = Products.getID (email.productIndex);
-						DarioAppMain.recordEvent ("mail", "select", product);
-					}else{
-						message.setText ("");
-						//DarioAppMain.recordEvent ("mail", "unselect");
-					}
-					
+					message.setText ("loading..");
+
+					ActionListener taskPerformers = new ActionListener() {
+						public void actionPerformed(ActionEvent evt) {
+							int i = table.getSelectedRow();
+							if (i>=0 && i<tableModel.emails.size())
+							{
+								Email email = tableModel.emails.elementAt(i);
+								String product = Products.getID (email.productIndex);
+								message.setText (email.bodyHTML());
+								DarioAppMain.recordEvent ("mail", "loaded", product);
+							}				
+						}
+					};
+
+					double rnd = Math.random()*2-1;
+					double noise = (delaymail/100*35)*rnd;						
+					Timer test2 = new Timer(delaymail+(int)noise, taskPerformers);
+					test2.setRepeats(false);
+					test2.start();		
+
+					String product = Products.getID (email.productIndex);
+					DarioAppMain.recordEvent ("mail", "select", product);
 				}
-				
 			}
-			
-			
 		});
 
 		JSplitPane msgPane = new JSplitPane (JSplitPane.VERTICAL_SPLIT, tableScroll, editorScroll);
 		msgPane.setBorder (null); 
-		
+
 		// makes divider in mail window unable to be resized
 		msgPane.setEnabled(false);
-		
+
 		main.add (msgPane, BorderLayout.CENTER);
 
-		JButton getmail = controlButton ("Received", 3);
-		JButton compose = controlButton ("New message", 4);
-		JButton reply = controlButton ("Reply", 1);
+		JButton getmail = controlButton ("Received", 3);		
+		JButton compose = controlButton ("New message", 4);		
+		JButton reply = controlButton ("Reply", 1);		
 		JButton forward = controlButton ("Forward", 2);
-				
+		
+		getmail.setMaximumSize(new Dimension 	(200,50));
+		getmail.setPreferredSize(new Dimension 	(200,50));
+		compose.setMaximumSize(new Dimension 	(200,50));
+		compose.setPreferredSize(new Dimension 	(200,50));
+		reply.setMaximumSize(new Dimension 		(200,50));
+		reply.setPreferredSize(new Dimension 	(200,50));
+		forward.setMaximumSize(new Dimension 	(200,50));
+		forward.setPreferredSize(new Dimension 	(200,50));
+		
+		
 		JPanel buttons = new JPanel();
 		buttons.setLayout (new BoxLayout (buttons, BoxLayout.X_AXIS));
-		buttons.add (getmail);
-		buttons.add (Box.createRigidArea (new Dimension (3,3)));
-		buttons.add (compose);
-		buttons.add (Box.createRigidArea (new Dimension (3,3)));
-		buttons.add (reply);
-		buttons.add (Box.createRigidArea (new Dimension (3,3)));
-		buttons.add (forward);
-		buttons.add (Box.createHorizontalGlue());
-		buttons.setBackground (Utilities.myDarkGray);
-		buttons.setBorder (BorderFactory.createEmptyBorder (3,12,3,12));
 		
+		buttons.setBorder (BorderFactory.createEmptyBorder (3,15,3,15));
+		buttons.add (getmail);
+		buttons.add (compose);
+		buttons.add (reply);
+		buttons.add (forward);
+		buttons.setBackground (Utilities.myDarkGray);
+		buttons.setBorder (BorderFactory.createEmptyBorder (3,15,3,15));
+
 		reply.addActionListener (new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int i = table.getSelectedRow();
@@ -265,8 +261,8 @@ public class Mail extends JFrame
 		pack ();
 
 		//setSize (700, 700);
-		msgPane.setDividerLocation (.25);
-	
+		msgPane.setDividerLocation (.999);
+
 		//added a recordEvent to record the focus on the main mail window
 		addWindowFocusListener (new WindowFocusListener() {
 			public void windowGainedFocus(WindowEvent e) {
@@ -287,19 +283,17 @@ public class Mail extends JFrame
 					}
 				};
 				double rnd = Math.random()*2-1;
-				
+
 				double noise = (delaymail/100*35)*rnd;
 				Timer test2 = new Timer(delaymail+(int)noise, taskPerformers);
 				test2.setRepeats(false);
 				test2.start();
-				
-				
-			}
+	}
 			public void windowLostFocus(WindowEvent e) {
 				message.setText ("");
 				//if the window is not focused, we don't want them to cheat by dragging the focused window an look at the model. 
 				//So if th mail window is not focused, the message is blank 
-				
+
 			}
 		});
 	}

@@ -1,3 +1,0 @@
-.397	browser	focus	""
-.739	mail	focus	""
-3.494	browser	focus	""
