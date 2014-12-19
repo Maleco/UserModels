@@ -143,6 +143,7 @@ public class DarioAppMain
 	
 				StartDarioAppMain(3000, noisePercentage, testMode);
 				setNewCondition(dezevolgorde[0], dezevolgorde[1]);
+				System.out.println(Products.getSize());
 				recordEvent ("start conditie", dezevolgorde[0] + "_" +dezevolgorde[1]);
 		
 	}

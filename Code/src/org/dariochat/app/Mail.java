@@ -147,8 +147,8 @@ public class Mail extends JFrame
 			}
 		});
 
-		// Add the (20) mails to the Email window
-		for (int i=0 ; i<20 ; i++) tableModel.emails.add(new Email(i+1));
+		// Add all the mails to the Email window
+		for (int i=0; i < Products.getSize(); i++) tableModel.emails.add(new Email(i));
 
 		JScrollPane tableScroll = new JScrollPane (table);
 		tableScroll.setVerticalScrollBarPolicy (JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);

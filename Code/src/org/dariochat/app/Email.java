@@ -9,9 +9,9 @@ import javax.swing.ImageIcon;
 public class Email
 {
 	String from, subject, date, shortDate;
-	int productIndex;
 	String body;
 	int status;
+	int productIndex;
 
 	static String firstNames[] = {"Henk", "Ingrid", "Piet", "Klaas", "Jan", "Roderick"};
 	static String lastNames[] = {"Jansen", "de Vries", "Smilda", "InsertStandaardNaam"};
@@ -24,7 +24,7 @@ public class Email
 		String firstName = firstNames[r.nextInt(firstNames.length)];
 		from = firstName + " " + lastNames[r.nextInt(lastNames.length)];
 		
-		subject = "Vraag " + i;
+		subject = "Vraag " + (i+1);
 		
 		Date currentDate = new Date();
 		SimpleDateFormat df = new SimpleDateFormat ("M/dd/yy h:mm aaa"); //("EEE MMM d yyyy h:mm aaa");1
@@ -35,7 +35,6 @@ public class Email
 
 		productIndex = i;
 		
-		String product = Products.getBrandModel (productIndex);
 		body = 
 				"Goedemiddag, <br><br>" + Products.getAmount(i) + "<br><br>" + 
 				"Mijn wensen zijn:<br>- " + Products.getDemand1(i) + "<br>- " + Products.getDemand2(i) + "<br><br>" +

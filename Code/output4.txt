@@ -14,3 +14,5 @@
 15.285	browser	link1	"question1_7.html"
 21.048	mail	focus	""
 23.060	mail	loaded	"111"
+275.957	mail	focus	""
+278.554	mail	loaded	"111"

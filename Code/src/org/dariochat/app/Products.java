@@ -14,10 +14,13 @@ public class Products
 
 	static String getFullString (int index)
 	{
-		//return products[index][0] + " " + products[index][1] + " " + products[index][2] + " " + products[index][3];
-		return "Question" + 1;
+		return products[index][0] + " " + products[index][1] + " " + products[index][2] + " " + products[index][3];
 	}
 
+	static int getSize ()
+	{
+		return questions.length;
+	}
 	static String getAmount (int index)
 	{
 		return questions[index][1];
@@ -49,7 +52,7 @@ public class Products
 		},
 		{
 			"Intro_3",
-			"Ik wil graag op 21 met 5 personen op wintersport.",
+			"Ik wil graag op 21 februari met 5 personen op wintersport.",
 			"WiFi inbegrepen",
 			"De laagst mogelijke reissom"
 		},
@@ -231,7 +234,8 @@ public class Products
 			"Part2_9:",
 			"Ik wil graag op 31 januari 2015, met 1 persoon op wintersport. ",
 			"WiFi aanwezig",
-			"Crêperie aanwezig"
+			"Crê1"
+			+ "erie aanwezig"
 		},
 		{
 			"Part2_10:",
