@@ -1,7 +1,9 @@
 package org.dariochat.app;
 
+import java.awt.*;
 import java.awt.event.*;
 import java.util.Calendar;
+
 import javax.swing.*;
 
 public class DarioAppMain
@@ -13,6 +15,7 @@ public class DarioAppMain
 	static long startTime = 0;
 	static double lastTime = 0;
 	static boolean newTrial = true;
+	static boolean minimized;
 	
 	static void startEvent (int delay, boolean periodic, ActionListener al)
 	{
@@ -32,16 +35,36 @@ public class DarioAppMain
 		Sample s = new Sample (.001*ms, window, event, extra);
 		data.add (s);
 		
-
+			System.out.println(ms);
 			/// Implement our model here
-			if (newTrial)
+			if (newTrial & ms > 10000)
 			{
-				int delay = 50 + Utilities.random.nextInt(150);
-				startEvent (delay, false, new ActionListener() {
-					public void actionPerformed (ActionEvent e) {
-						///recordEvent ("chat", "prompt", text);
-					}
-				});
+				/// The following lines of code minimize the windows of the mailtask, so the chatclient is focused.
+				mail.setExtendedState(Frame.ICONIFIED);
+				mail.setVisible (false);
+				browser.setExtendedState(Frame.ICONIFIED);
+				browser.setVisible (false);
+				if(composer.isVisible()){
+					composer.setExtendedState(Frame.ICONIFIED);
+					composer.setVisible(false);
+					minimized = true;
+				}
+				
+				/// Simple testcase, I let the thread sleep for 5 seconds, after which the panels become visible again. The user still has to minimize the chatclient.
+				try {
+				    Thread.sleep(5000);                
+				} catch(InterruptedException ex) {
+				    Thread.currentThread().interrupt();
+				}
+				mail.setExtendedState(Frame.NORMAL);
+				mail.setVisible (true);
+				browser.setExtendedState(Frame.NORMAL);
+				browser.setVisible (true);
+				if(minimized){
+					composer.setExtendedState(Frame.NORMAL);
+					composer.setVisible(true);
+				}
+				
 				newTrial = false;
 			}
 			
@@ -55,7 +78,7 @@ public class DarioAppMain
 	}
 	
 	
-	public static void DarioAppMain(int browserDelay, int mailDelay, int noisePercentage, boolean testMode){
+	public static void DarioAppMainn(int browserDelay, int mailDelay, int noisePercentage, boolean testMode){
 		startTime = Calendar.getInstance().getTimeInMillis();
 
 		Images.initialize();
@@ -87,7 +110,7 @@ public class DarioAppMain
 		});
 	}
 
-	public static void main (String args[])
+	public static void main (String args[]) throws AWTException
 	{
 		/* Commented out to speed up dev-time
 		JFrame frame = null;
@@ -104,7 +127,7 @@ public class DarioAppMain
 		int mailDelay = 2000;
 		int noisePercentage = 35;	// percentage of noise on delay (so amount of noise depends on size of delay)
 		boolean testMode = true;	// if testMode is true, application will exit when clicking the red exit button on the browser (!) window
-		DarioAppMain(browserDelay, mailDelay, noisePercentage, testMode);
+		DarioAppMainn(browserDelay, mailDelay, noisePercentage, testMode);
 	}
 	
 
