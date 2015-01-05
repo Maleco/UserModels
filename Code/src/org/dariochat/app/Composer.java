@@ -95,6 +95,7 @@ public class Composer extends JFrame
 			public void actionPerformed(ActionEvent e) {
 				setVisible (false);
 				DarioAppMain.recordEvent ("compose", "send", extractTyping());
+				DarioAppMain.incrementFinish();
 			}
 		});
 

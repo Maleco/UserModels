@@ -1,13 +1,13 @@
 package org.dariochat.app;
 
-public class Sample
+public class Sampledario
 {
 	double time;
 	String window;
 	String event;
 	String extra;
 	
-	Sample (double time, String window, String event, String extra)
+	Sampledario (double time, String window, String event, String extra)
 	{
 		this.time = time;
 		this.window = window;

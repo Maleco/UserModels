@@ -1,7 +1,11 @@
 package org.dariochat.app;
+import com.srresearch.eyelink.*;
 
+import java.awt.*;
 import java.awt.event.*;
 import java.util.Calendar;
+import java.util.Random;
+
 import javax.swing.*;
 
 public class DarioAppMain
@@ -13,6 +17,20 @@ public class DarioAppMain
 	static long startTime = 0;
 	static double lastTime = 0;
 	static boolean newTrial = true;
+	static boolean minimized;
+	static int expStruct;
+	static Random rand = new Random();
+	static int qFinished = 0;
+	static String currentWindow;
+	static Sample s;
+	//static Tracker t = new Tracker();
+	static double max = 0;
+	
+	static void incrementFinish ()
+	{
+		qFinished++;
+	}
+	
 	
 	static void startEvent (int delay, boolean periodic, ActionListener al)
 	{
@@ -26,10 +44,34 @@ public class DarioAppMain
 		recordEvent (window, event, "");
 	}
 	
+	static void minimize () {
+		mail.setExtendedState(Frame.ICONIFIED);
+		mail.setVisible (false);
+		browser.setExtendedState(Frame.ICONIFIED);
+		browser.setVisible (false);
+		if(composer.isVisible()){
+			composer.setExtendedState(Frame.ICONIFIED);
+			composer.setVisible(false);
+			minimized = true;
+		}
+		mail.setExtendedState(Frame.NORMAL);
+		mail.setVisible (true);
+		browser.setExtendedState(Frame.NORMAL);
+		browser.setVisible (true);
+		if(minimized){
+			composer.setExtendedState(Frame.NORMAL);
+			composer.setVisible(true);
+		}
+	}
+	
 	static void recordEvent (String window, String event, String extra)
 	{
+		if(event == "focus")
+		{
+			currentWindow = window;
+		}
 		long ms = Calendar.getInstance().getTimeInMillis() - startTime;
-		Sample s = new Sample (.001*ms, window, event, extra);
+		Sampledario s = new Sampledario (.001*ms, window, event, extra);
 		data.add (s);
 		
 
@@ -85,6 +127,16 @@ public class DarioAppMain
 				composer.setExtendedState (JFrame.NORMAL);
 			}
 		});
+		while(true){
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
+		System.out.println(qFinished);
+		System.out.println(currentWindow);
+		//s = t.getNewestSample();
+		}
 	}
 
 	public static void main (String args[])
@@ -100,6 +152,7 @@ public class DarioAppMain
 		recordEvent ("participantGender", participantGender,"");
 		recordEvent ("participantAge", participantAge,"");
 		*/		
+		expStruct = rand.nextInt(2);
 		int browserDelay = 3000;
 		int mailDelay = 2000;
 		int noisePercentage = 35;	// percentage of noise on delay (so amount of noise depends on size of delay)
