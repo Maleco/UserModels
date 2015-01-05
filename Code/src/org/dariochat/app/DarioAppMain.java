@@ -80,8 +80,8 @@ public class DarioAppMain
 				browser.setLocation (820, 0);
 				browser.setExtendedState (JFrame.NORMAL);
 				
-				composer.setSize (1000, 1000);
-				composer.setLocation (70, 50);
+				composer.setSize (820, 1080);
+				composer.setLocation (0, 0);
 				composer.setExtendedState (JFrame.NORMAL);
 			}
 		});

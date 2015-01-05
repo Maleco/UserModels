@@ -30,7 +30,7 @@ public class Composer extends JFrame
 	{
 		String text = editor.getText();
 		int i1 = text.indexOf ("<body>");
-		int i2 = text.indexOf ("<br>");
+		int i2 = text.indexOf ("</html>");
 		if (i1>0 && i2>0 && i1<i2 && i2<text.length())
 		{
 			text = text.substring (i1+6, i2).trim();
@@ -119,9 +119,6 @@ public class Composer extends JFrame
 
 		editor.requestFocusInWindow ();
 		editor.setCaretPosition (1); // not 0 because of <html> tag!
-
-		//setSize (500, 500);
-		//setLocation (400, 100);
 	}
 
 	String indentBody (String body)
@@ -138,7 +135,27 @@ public class Composer extends JFrame
 				"<tr><td align=right>Subject:</td><td>Re: " + include.subject + "</td></tr>" +
 				"</table></html>");
 
-		editor.setText ("<html><br><br>" + /*indentBody(include.body) + */"</html>");
+		editor.setText (
+				"<html>" + 
+						"Beste klant,<br>" +
+						"<br>" +
+						"Bedankt voor uw e-mail.<br>" +
+						"<br>" +
+						"De prijzen die bij de beste optie naar uw wensen horen zijn:<br>" +
+						"<br>" +
+						"De reissom:<br>" +
+						"&#8364 <br><br>" +  
+						"De prijs van de skipas ter plaatse:<br>"+
+						"&#8364 <br><br>" +  
+						"De verplichte bijkomende kosten: <br>" +
+						"&#8364 <br><br>" +  
+						"<br>" +
+						"Mocht u nog vragen hebben, laat dit dan weten.<br>" +
+						"Met vriendelijke groet,<br>" +
+						"<br>" +
+						"Bizztravel" +
+					"</html>"
+				);
 
 		editor.requestFocusInWindow ();
 		editor.setCaretPosition (1); // no 0 because of <html> tag!

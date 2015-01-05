@@ -13,9 +13,8 @@ public class Email
 	int status;
 	int productIndex;
 
-	static String firstNames[] = {"Henk", "Ingrid", "Piet", "Klaas", "Jan", "Roderick"};
-	static String lastNames[] = {"Jansen", "de Vries", "Smilda", "InsertStandaardNaam"};
-	static String subjects[] = {"question", "request", "information"};
+	static String firstNames[] = {"Henk", "Ingrid", "Piet", "Klaas", "Jan", "Roderick", "Tess", "Sophie", "Julia", "Emma", "Lisa", "Sem", "Levi", "Bram", "Daan" };
+	static String lastNames[] = {"Jansen", "de Vries", "Smilda", "Visser", "Meijer", "Mulder", "Bos", "Vos", "Peters", "van de Berg", "van Dijk", "Bakker", "Smit", "de Boer", "Peters"};
 	
 	Email (int i)
 	{

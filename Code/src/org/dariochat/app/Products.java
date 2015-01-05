@@ -84,7 +84,7 @@ public class Products
 			{
 				"Part1_6",
 				"Ik wil graag op 5 februari 2015, met 4 personen op wintersport. ",
-				"De reissom onder €260,-",
+				"De reissom onder &#8364 260,-",
 				"Met een balkon of een terras"
 			},
 			{
@@ -113,7 +113,7 @@ public class Products
 			},
 			{
 				"Part1_11",
-				"Ik wil graag op 21 februari 2015, met 2 personen op wintersport naar Serre Chevalier Vallée",
+				"Ik wil graag op 21 februari 2015, met 2 personen op wintersport naar Serre Chevalier Vall&#233e",
 				"Met skilockers inbegrepen",
 				"Aan de piste"
 			},
@@ -125,7 +125,7 @@ public class Products
 			},
 			{
 				"Part1_13",
-				"Ik wil graag op 7 februari 2015, met 4 personen op wintersport naar Méribel",
+				"Ik wil graag op 7 februari 2015, met 4 personen op wintersport naar M&#233ribel",
 				"Met WiFi inbegrepen",
 				"Met de hoogste beoordeling"
 			},
@@ -157,7 +157,7 @@ public class Products
 				"Part1_18",
 				"Ik wil graag op 14 februari 2015, met 4 personen op wintersport.",
 				"Een vakantie in Les Portes du Soleil",
-				"Een verblijf van privé-eigenaren"
+				"Een verblijf van priv&#233-eigenaren"
 			},
 			{
 				"Part1_19",
@@ -205,12 +205,12 @@ public class Products
 			{
 				"Part2_6:",
 				"Ik wil graag op 30 januari, met 4 personen op wintersport.",
-				"Een reissom onder €200",
+				"Een reissom onder &#8364 200",
 				"Met een balkon inbegrepen"
 			},
 			{
 				"Part2_7:",
-				"Ik wil graag op 20 december, met 6 personen op wintersport naar Superdévoluy.",
+				"Ik wil graag op 20 december, met 6 personen op wintersport naar Superd&#233voluy.",
 				"Een reissom onder de 300 euro",
 				"Met een broodjesservice inbegrepen"
 			},
@@ -224,8 +224,7 @@ public class Products
 				"Part2_9:",
 				"Ik wil graag op 31 januari 2015, met 1 persoon op wintersport. ",
 				"WiFi aanwezig",
-				"Crê1"
-						+ "erie aanwezig"
+				"Cr&#234perie aanwezig"
 			},
 			{
 				"Part2_10:",
@@ -235,7 +234,7 @@ public class Products
 			},
 			{
 				"Part2_11:",
-				"Ik wil graag op 10 januari 2015 met 2 personen op wintersport naar Serre Chevalier Vallée. ",
+				"Ik wil graag op 10 januari 2015 met 2 personen op wintersport naar Serre Chevalier Vall&#233e. ",
 				"Met sauna inbegrepen",
 				"Aan de piste"
 			},
@@ -255,7 +254,7 @@ public class Products
 				"Part2_14:",
 				"Ik wil graag op 4 april, met 4 personen op wintersport naar Chatel. ",
 				"Met een een balkon",
-				"Van privé eigenaren"
+				"Van priv&#233 eigenaren"
 			},
 			{
 				"Part2_15:",
