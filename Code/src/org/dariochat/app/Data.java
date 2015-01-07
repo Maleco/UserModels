@@ -5,12 +5,12 @@ import java.util.*;
 
 public class Data
 {
-	Vector<Sample> samples;
+	Vector<Sampledario> samples;
 	PrintStream outfile;
 	
 	Data ()
 	{
-		samples = new Vector<Sample>();
+		samples = new Vector<Sampledario>();
 		outfile = Utilities.uniqueOutputFile ("output");
 	}
 
@@ -19,12 +19,12 @@ public class Data
 		return samples.size();
 	}
 	
-	Sample get (int i)
+	Sampledario get (int i)
 	{
 		return samples.elementAt(i);
 	}
 
-	void add (Sample s)
+	void add (Sampledario s)
 	{
 		samples.add (s);
 		outfile.println (s);
