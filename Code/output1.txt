@@ -1,0 +1,2 @@
+.447	browser	focus	""
+.779	mail	focus	""

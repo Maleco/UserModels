@@ -5,7 +5,10 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.Calendar;
 import java.util.Random;
+<<<<<<< HEAD
 import java.util.Vector;
+=======
+>>>>>>> 027143746968b5e728222819c1cf0243397c81ee
 
 import javax.swing.*;
 
@@ -18,6 +21,24 @@ public class DarioAppMain
 	static Random rand = new Random();
 	static long startTime = 0;
 	static double lastTime = 0;
+<<<<<<< HEAD
+=======
+	static boolean newTrial = true;
+	static boolean minimized;
+	static int expStruct;
+	static Random rand = new Random();
+	static int qFinished = 0;
+	static String currentWindow;
+	static Sample s;
+	//static Tracker t = new Tracker();
+	static double max = 0;
+	
+	static void incrementFinish ()
+	{
+		qFinished++;
+	}
+	
+>>>>>>> 027143746968b5e728222819c1cf0243397c81ee
 	
 	static boolean minimized;
 	static int nrIntro = 4;
@@ -53,9 +74,14 @@ public class DarioAppMain
 	{ 
 		recordEvent (window, event, "");
 	}
+<<<<<<< HEAD
 
 	static void minimize () {
 		// The minimize action
+=======
+	
+	static void minimize () {
+>>>>>>> 027143746968b5e728222819c1cf0243397c81ee
 		mail.setExtendedState(Frame.ICONIFIED);
 		mail.setVisible (false);
 		browser.setExtendedState(Frame.ICONIFIED);
@@ -73,6 +99,7 @@ public class DarioAppMain
 			composer.setExtendedState(Frame.NORMAL);
 			composer.setVisible(true);
 		}
+<<<<<<< HEAD
 
 		// Set the variables
 		currentEmailInterrupted = true;
@@ -110,6 +137,16 @@ public class DarioAppMain
 			!currentEmailInterrupted  && rand.nextInt(10) <= 1 && event != "type" )
 			minimize();	// Interrupt
 
+=======
+	}
+	
+	static void recordEvent (String window, String event, String extra)
+	{
+		if(event == "focus")
+		{
+			currentWindow = window;
+		}
+>>>>>>> 027143746968b5e728222819c1cf0243397c81ee
 		long ms = Calendar.getInstance().getTimeInMillis() - startTime;
 		Sampledario s = new Sampledario (.001*ms, window, event, extra);
 		data.add (s);
@@ -155,6 +192,7 @@ public class DarioAppMain
 				composer.setExtendedState (JFrame.NORMAL);
 			}
 		});
+<<<<<<< HEAD
 		 
 		//Continuous loop for the Eyetracker-data
 		while(true){
@@ -183,11 +221,23 @@ public class DarioAppMain
 				// Interrupt if possible
 				if (getIOP(avgDil) < thresholdIOP) minimize();
 			}
+=======
+		while(true){
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
+		System.out.println(qFinished);
+		System.out.println(currentWindow);
+		//s = t.getNewestSample();
+>>>>>>> 027143746968b5e728222819c1cf0243397c81ee
 		}
 	}
 
 	public static void main (String args[])
 	{
+<<<<<<< HEAD
 		JFrame frame = new JFrame();
 		// Show instructions
 		JOptionPane.showMessageDialog(
@@ -256,6 +306,21 @@ public class DarioAppMain
 		// Set experiment variables
 		randSecond = rand.nextInt(2);
 		int browserDelay = 2000;
+=======
+		/* Commented out to speed up dev-time
+		JFrame frame = null;
+		JOptionPane.showMessageDialog(frame, "This is the start of the experiment.\n\n When you're ready, you may press 'ok' to start.");
+		String participantNumber = (String)JOptionPane.showInputDialog(frame, "Your participant number:\n", "Participant number", JOptionPane.QUESTION_MESSAGE);
+		Object[] possibilities = {"Male", "Female"};
+		String participantGender = (String)JOptionPane.showInputDialog(frame, "Your gender: ", "Your gender", JOptionPane.PLAIN_MESSAGE,null,possibilities, "Male");
+		String participantAge = (String)JOptionPane.showInputDialog(frame, "Your age:\n", "Your age", JOptionPane.QUESTION_MESSAGE);
+		recordEvent ("participantNumber", participantNumber,"");
+		recordEvent ("participantGender", participantGender,"");
+		recordEvent ("participantAge", participantAge,"");
+		*/		
+		expStruct = rand.nextInt(2);
+		int browserDelay = 3000;
+>>>>>>> 027143746968b5e728222819c1cf0243397c81ee
 		int mailDelay = 2000;
 		int noisePercentage = 25;	// percentage of noise on delay (so amount of noise depends on size of delay)
 		boolean testMode = true;	// if testMode is true, application will exit when clicking the red exit button on the browser (!) window
