@@ -5,7 +5,7 @@ import java.util.*;
 
 import javax.swing.ImageIcon;
 
-// Create a *random* email for the task
+// Create emails for the task
 public class Email
 {
 	String from, subject, date, shortDate;

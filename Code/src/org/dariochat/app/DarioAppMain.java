@@ -15,16 +15,16 @@ public class DarioAppMain
 	static Browser browser;
 	static Composer composer;
 	static Data data = new Data ();
+	static Random rand = new Random();
 	static long startTime = 0;
 	static double lastTime = 0;
-	static boolean newTrial = true;
+	
 	static boolean minimized;
-	static Random rand = new Random();
-
 	static int nrIntro = 4;
 	static int nrNormal = 8;
 	static int randSecond = 0;
 	static int thresholdIOP = 10;
+	static int readSize = 125;
 
 	// Eyetracker variables
 	static int qFinished = 0;
@@ -105,18 +105,14 @@ public class DarioAppMain
 		}
 
 		// Random interrupt (20% chance)
-		if (
-				currentEmail >= nrIntro  		  + nrNormal*randSecond && 
-				currentEmail < (nrIntro+nrNormal) + nrNormal*randSecond && 
-				!currentEmailInterrupted  && 
-				rand.nextInt(10) <= 1 &&
-				event != "type"
-				) minimize();	// Interrupt
+		if (currentEmail >= nrIntro  		  + nrNormal*randSecond && 
+			currentEmail < (nrIntro+nrNormal) + nrNormal*randSecond && 
+			!currentEmailInterrupted  && rand.nextInt(10) <= 1 && event != "type" )
+			minimize();	// Interrupt
 
 		long ms = Calendar.getInstance().getTimeInMillis() - startTime;
 		Sampledario s = new Sampledario (.001*ms, window, event, extra);
 		data.add (s);
-
 	}
 
 	public static void exit ()
@@ -126,8 +122,8 @@ public class DarioAppMain
 
 	public static double getIOP(double dilSample)
 	{
-		double PCPSdilSample = (dilSample-dilBase)/dilBase;
-		double PCPSdilMax 	 = (dilMax-dilBase)/dilBase;
+		double PCPSdilSample = (dilSample-dilBase)	/dilBase;
+		double PCPSdilMax 	 = (dilMax-dilBase)		/dilBase;
 		return 1+(19*(1-(PCPSdilSample/PCPSdilMax)));
 	}
 
@@ -144,8 +140,6 @@ public class DarioAppMain
 		composer = new Composer ();
 		composer.setVisible (false);
 
-		// should also disable CMD-` in Preferences so people don't switch windows using keystrokes!
-
 		startEvent (100, true, new ActionListener() {
 			public void actionPerformed (ActionEvent e) {
 				mail.setSize (500, 1080);
@@ -161,17 +155,16 @@ public class DarioAppMain
 				composer.setExtendedState (JFrame.NORMAL);
 			}
 		});
+		 
+		//Continuous loop for the Eyetracker-data
 		while(true){
-			// >= 4 - < 9 or
-			// >= 9 - < 14
-			if (
-					currentEmail >= nrIntro  		  - nrNormal*(randSecond-1) && 
-					currentEmail < (nrIntro+nrNormal) - nrNormal*(randSecond-1) && 
-					!currentEmailInterrupted 
-					)	
-			{			
-				int readSize = 125;
+			if (currentEmail >= nrIntro  		  - nrNormal*(randSecond-1) && 
+				currentEmail < (nrIntro+nrNormal) - nrNormal*(randSecond-1) && 
+				!currentEmailInterrupted ) 
+			{				
+				
 				double avgDil = 0.00;
+				
 				//Read #readSize values with an pauze of 4ms (so 500ms total)
 				for (int counter = 0; counter < readSize; counter++)
 				{
